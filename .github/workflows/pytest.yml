@@ -1,0 +1,35 @@
+name: Run Pytest
+
+# 1. どんなときにGitHub Actionsを走らせるか
+on:
+  push:
+    branches: [ "main", "master" ]  # main や master ブランチにプッシュされた時
+  pull_request:
+    branches: [ "main", "master" ]  # プルリクエストが作成された時
+
+# 2. 実際に実行する処理の内容
+jobs:
+  test:
+    runs-on: ubuntu-latest  # GitHubが用意してくれるきれいなLinux環境
+
+    steps:
+      # リポジトリのコードを仮想環境にチェックアウト（ダウンロード）する
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Pythonの環境をセットアップする（バージョンは必要に応じて変更可能）
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # 依存ライブラリのインストール
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest Flask Flask-SQLAlchemy
+
+      # テストの実行（先ほどエラーになったパス問題をPYTHONPATH=.で解決！）
+      - name: Run pytest
+        run: |
+          PYTHONPATH=. pytest

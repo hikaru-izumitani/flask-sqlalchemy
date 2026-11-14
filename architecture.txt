@@ -1,0 +1,12 @@
+my_todo_app/
+├── models/
+│   └── todo.py              # SQLAlchemyのテーブル定義
+├── services/
+│   ├── db/
+│   │   └── todo_sql.py      # DBに直接アクセスする処理（クエリ発行）
+│   └── todo_service.py      # バリデーション等のビジネスロジック
+├── controllers/
+│   └── todo_controller.py   # リクエストとレスポンスの制御
+├── routes/
+│   └── todo_routes.py       # Blueprintのルーティング
+└── app.py                   # アプリ起動
